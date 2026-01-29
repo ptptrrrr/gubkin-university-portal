@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Губкинский университет - Учебный портал</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Основная таблица */
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        /* Убираем все видимые границы */
+        .main-table td, .main-table th {
+            border: none;
+            padding: 12px 15px;
+            vertical-align: top;
+        }
+        
+        /* Стили для заголовка */
+        .header-cell {
+            background: linear-gradient(to right, #1a3a8f, #2a56c6);
+            color: white;
+            padding: 20px;
+        }
+        
+        .university-name {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .specialty {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .country {
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-img {
+            height: 48px;
+            width: auto;
+        }
+        
+        /* Боковое меню */
+        .sidebar {
+            width: 220px;
+            background-color: #f8f9fa;
+            border-right: 1px solid #eaeaea;
+            vertical-align: top;
+        }
+        
+        .menu-section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            color: #1a3a8f;
+            padding: 8px 15px;
+            background-color: #eef2ff;
+            border-bottom: 1px solid #dde2ff;
+        }
+        
+        .menu-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .menu-item:hover {
+            background-color: #f0f5ff;
+            padding-left: 18px;
+        }
+        
+        .menu-item.active {
+            background-color: #eef2ff;
+            font-weight: bold;
+            color: #1a3a8f;
+            border-left: 4px solid #1a3a8f;
+            padding-left: 11px;
+        }
+        
+        /* Стили для блока студента с фото */
+        .student-info {
+            padding: 15px;
+            border-bottom: 1px solid #eaeaea;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .student-info:hover {
+            background-color: #f0f5ff;
+        }
+        
+        .student-info-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .student-photo-mini {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #eaeaea;
+        }
+        
+        .student-name {
+            font-weight: bold;
+            font-size: 16px;
+            color: #1a3a8f;
+        }
+        
+        .profile-icon {
+            color: #1a3a8f;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        
+        .student-info:hover .profile-icon {
+            opacity: 1;
+        }
+        
+        .card-link {
+            color: #0066cc;
+            text-decoration: underline;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 14px;
+        }
+        
+        /* Основная область контента */
+        .content-area {
+            padding: 20px;
+            background-color: white;
+            min-height: 600px;
+        }
+        
+        /* Стили для контента вкладок */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .content-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-header {
+            font-weight: bold;
+            color: #1a3a8f;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #eef2ff;
+        }
+        
+        /* Блок с учебной информацией */
+        .academic-info {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .info-block {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .info-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .info-value {
+            font-size: 15px;
+            color: #333;
+        }
+        
+        /* Блок достижений - в одну строку */
+        .achievements-row {
+            display: flex;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .achievement-item {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .metric-label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .metric-value {
+            font-weight: bold;
+            font-size: 24px;
+            color: #1a3a8f;
+        }
+        
+        .mark {
+            color: #ff6600;
+            font-weight: normal;
+        }
+        
+        /* Таблица предметов */
+        .subjects-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .subjects-table th {
+            background-color: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: bold;
+            color: #555;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .subjects-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .subjects-table tr:hover {
+            background-color: #f9faff;
+        }
+        
+        .semester-info {
+            background-color: #eef2ff;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .grade-excellent {
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .grade-good {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        
+        .grade-pass {
+            color: #6c757d;
+            font-weight: bold;
+        }
+        
+        /* Кнопки для событий */
+        .events-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .event-btn {
+            background-color: #1a3a8f;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.2s;
+            min-width: 120px;
+        }
+        
+        .event-btn:hover {
+            background-color: #2a56c6;
+            transform: translateY(-2px);
+        }
+        
+        .event-btn.active {
+            background-color: #0d2c75;
+            box-shadow: 0 4px 8px rgba(13, 44, 117, 0.2);
+        }
+        
+        /* Стили для информации о стипендии */
+        .scholarship-info {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .scholarship-amount {
+            font-size: 28px;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+        
+        .scholarship-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .scholarship-table th {
+            background-color: #eef2ff;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .scholarship-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        /* Стили для профиля */
+        .profile-content {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-photo {
+            flex: 0 0 200px;
+        }
+        
+        .profile-photo img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .profile-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+        
+        .profile-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .profile-value {
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .education-item, .history-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #1a3a8f;
+        }
+        
+        .education-item:last-child, .history-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Стили для текстовых блоков */
+        .text-content {
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .text-content p {
+            margin-bottom: 15px;
+        }
+        
+        .text-content h3 {
+            color: #1a3a8f;
+            margin: 20px 0 10px 0;
+        }
+        
+        .text-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .text-content li {
+            margin-bottom: 5px;
+        }
+        
+        .text-content a {
+            color: #1a3a8f;
+            text-decoration: none;
+        }
+        
+        .text-content a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Стили для приказов */
+        .order-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .order-number {
+            font-weight: bold;
+            color: #1a3a8f;
+        }
+        
+        .order-date {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .order-description {
+            margin-top: 5px;
+            color: #333;
+        }
+        
+        /* Стили для центрированного текста */
+        .centered-text {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 16px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        /* Кнопки и действия */
+        .action-button {
+            background-color: #1a3a8f;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        
+        .action-button:hover {
+            background-color: #2a56c6;
+        }
+        
+        .download-link {
+            color: #1a3a8f;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 500;
+        }
+        
+        .download-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #eaeaea;
+            }
+            
+            .academic-info, .achievements-row, .events-buttons, .profile-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .content-area {
+                padding: 15px;
+            }
+            
+            .info-item {
+                flex-direction: column;
+            }
+            
+            .info-label {
+                min-width: auto;
+                margin-bottom: 5px;
+            }
+            
+            .event-btn {
+                width: 100%;
+            }
+            
+            .profile-photo {
+                flex: 0 0 auto;
+                text-align: center;
+            }
+            
+            .profile-photo img {
+                max-width: 200px;
+            }
+            
+            .student-info-content {
+                gap: 10px;
+            }
+            
+            .student-photo-mini {
+                width: 36px;
+                height: 36px;
+            }
+            
+            .student-name {
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table class="main-table">
+            <!-- Заголовок -->
+            <tr>
+                <td colspan="2" class="header-cell">
+                    <table style="width: 100%; border: none;">
+                        <tr>
+                            <td>
+                                <div class="header-logo">
+                                    <img src="favicon.png" class="logo-img" alt="Логотип">
+                                    <div>
+                                        <div class="university-name">Губкинский университет</div>
+                                        <div class="specialty">Р-24-10 - Специалист</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="country">RU</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <!-- Основной контент -->
+            <tr>
+                <!-- Левая панель с меню -->
+                <td class="sidebar">
+                    <div class="student-info" onclick="switchTab('profile')">
+                        <div class="student-info-content">
+                            <img src="mini-profile.jpg" class="student-photo-mini" alt="Фото студента">
+                            <div class="student-name">Бурукова Валерия</div>
+                        </div>
+                        <div class="profile-icon">▶</div>
+                    </div>
+                    
+                    <div class="menu-section">
+                        <div class="menu-item active" data-tab="uchebnaya-kartochka">Учебная карточка</div>
+                        <div class="menu-item" data-tab="sobytiya">События</div>
+                        <div class="menu-item" data-tab="dostizheniya">Достижения</div>
+                        <div class="menu-item" data-tab="uchebnyy-plan">Учебный план</div>
+                        <div class="menu-item" data-tab="prikazy">Приказы</div>
+                        <div class="menu-item" data-tab="stipendiya">Стипендия</div>
+                        <div class="menu-item" data-tab="literatura">Литература</div>
+                        <div class="menu-item" data-tab="karera">Карьера</div>
+                        <div class="menu-item" data-tab="distantsionnoe-obuchenie">Дистанционное обучение</div>
+                        <div class="menu-item" data-tab="rekvizity-scheta">Реквизиты счета</div>
+                        <div class="menu-item" data-tab="zayavleniya">Заявления</div>
+                        <div class="menu-item" data-tab="uvedomleniya-i-obyasnitelnye">Уведомления и объяснительные</div>
+                        <div class="menu-item" data-tab="novosti">Новости</div>
+                        <div class="menu-item" data-tab="uvedomleniya">Уведомления</div>
+                        <div class="menu-item" data-tab="zayavki">Заявки</div>
+                    </div>
+                    
+                    <!-- Пустые строки для соответствия макету -->
+                    <div style="height: 20px;"></div>
+                </td>
+                
+                <!-- Правая панель с контентом -->
+                <td class="content-area">
+                    <!-- Вкладка Учебная карточка -->
+                    <div id="uchebnaya-kartochka" class="tab-content active">
+                        <!-- Учебная информация -->
+                        <div class="content-section">
+                            <div class="section-header">Учебная информация</div>
+                            <div class="academic-info">
+                                <div class="info-block">
+                                    <div class="info-title">Учебная карточка</div>
+                                    <div class="info-value">Доступна для просмотра</div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="info-title">Эл. зачетная книжка</div>
+                                    <div class="info-value">Активна</div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="info-title">Статистика</div>
+                                    <a href="#" class="download-link" onclick="downloadStats()">Скачать статистику</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Достижения в одну строку -->
+                        <div class="content-section">
+                            <div class="section-header">Достижения</div>
+                            <div class="achievements-row">
+                                <div class="achievement-item">
+                                    <span class="metric-label">Средний балл</span>
+                                    <div class="metric-value">4.12</div>
+                                </div>
+                                <div class="achievement-item">
+                                    <span class="metric-label">Средний рейтинг</span>
+                                    <div class="metric-value">70</div>
+                                </div>
+                                <div class="achievement-item">
+                                    <span class="metric-label">Долги</span>
+                                    <div class="metric-value">0</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Учебный план -->
+                        <div class="content-section">
+                            <div class="section-header">Учебный план</div>
+                            <div class="semester-info">Семестр 3 | Средний балл: 4.00</div>
+                            
+                            <table class="subjects-table">
+                                <thead>
+                                    <tr>
+                                        <th>Предмет</th>
+                                        <th>Вид отчетности</th>
+                                        <th>Рейтинг</th>
+                                        <th>Оценка</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Технология конструкционных материалов</td>
+                                        <td>Зачет</td>
+                                        <td>61</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы противодействия коррупции</td>
+                                        <td>Зачет</td>
+                                        <td>73</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Профессионально-личностное саморазвитие</td>
+                                        <td>Зачет</td>
+                                        <td>69</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Функции многих переменных. Дифференциальные уравнения</td>
+                                        <td>Экзамен</td>
+                                        <td>78</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Электромагнетизм и волны</td>
+                                        <td>Экзамен</td>
+                                        <td>73</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физическая и коллоидная химия</td>
+                                        <td>Диф. зачет</td>
+                                        <td>81</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Промысловая геология</td>
+                                        <td>Диф. зачет</td>
+                                        <td>74</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физика пластовых систем</td>
+                                        <td>Экзамен</td>
+                                        <td>80</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Теоретическая механика 2</td>
+                                        <td>Экзамен</td>
+                                        <td>78</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Командообразование и принципы успешной командной деятельности</td>
+                                        <td>Зачет</td>
+                                        <td>75</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физическая культура 3</td>
+                                        <td>Зачет</td>
+                                        <td>66</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Семестр 2 -->
+                        <div class="content-section">
+                            <div class="semester-info">Семестр 2 | Средний балл: 4.00</div>
+                            <table class="subjects-table">
+                                <thead>
+                                    <tr>
+                                        <th>Предмет</th>
+                                        <th>Вид отчетности</th>
+                                        <th>Рейтинг</th>
+                                        <th>Оценка</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Введение в информационные системы</td>
+                                        <td>Зачет</td>
+                                        <td>75</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Геология нефти и газа</td>
+                                        <td>Зачет</td>
+                                        <td>58</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Деловой этикет и культура коммуникации</td>
+                                        <td>Зачет</td>
+                                        <td>74</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Интегралы и ряды</td>
+                                        <td>Экзамен</td>
+                                        <td>50</td>
+                                        <td class="grade-good">3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Материаловедение и технология конструкционных материалов</td>
+                                        <td>Зачет</td>
+                                        <td>56</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы молекулярной физики</td>
+                                        <td>Экзамен</td>
+                                        <td>70</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы нефтегазовых технологий</td>
+                                        <td>Экзамен</td>
+                                        <td>85</td>
+                                        <td class="grade-excellent">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Первая учебная практика</td>
+                                        <td>Диф. зачет</td>
+                                        <td>89</td>
+                                        <td class="grade-excellent">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Теоретическая механика</td>
+                                        <td>Зачет</td>
+                                        <td>63</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физическая культура 2</td>
+                                        <td>Зачет</td>
+                                        <td>52</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Химия 2</td>
+                                        <td>Экзамен</td>
+                                        <td>62</td>
+                                        <td class="grade-good">3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Семестр 1 -->
+                        <div class="content-section">
+                            <div class="semester-info">Семестр 1 | Средний балл: 3.80</div>
+                            <table class="subjects-table">
+                                <thead>
+                                    <tr>
+                                        <th>Предмет</th>
+                                        <th>Вид отчетности</th>
+                                        <th>Рейтинг</th>
+                                        <th>Оценка</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Базовые цифровые технологии</td>
+                                        <td>Экзамен</td>
+                                        <td>70</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Геология</td>
+                                        <td>Экзамен</td>
+                                        <td>87</td>
+                                        <td class="grade-excellent">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дифференциальное исчисление и аналитическая геометрия</td>
+                                        <td>Экзамен</td>
+                                        <td>63</td>
+                                        <td class="grade-good">3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Инклюзивная компетентность современного специалиста</td>
+                                        <td>Зачет</td>
+                                        <td>80</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>История нефтегазовой отрасли</td>
+                                        <td>Зачет</td>
+                                        <td>70</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Начертательная геометрия</td>
+                                        <td>Зачет</td>
+                                        <td>54</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы межкультурного и межконфессионального общения</td>
+                                        <td>Зачет</td>
+                                        <td>70</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы механики</td>
+                                        <td>Экзамен</td>
+                                        <td>74</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физическая культура</td>
+                                        <td>Зачет</td>
+                                        <td>68</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Химия</td>
+                                        <td>Диф. зачет</td>
+                                        <td>50</td>
+                                        <td class="grade-good">3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Профиль -->
+                    <div id="profile" class="tab-content">
+                        <div class="section-header">Профиль</div>
+                        <div class="profile-content">
+                            <div class="profile-photo">
+                                <img src="profile.jpg" alt="Фото Бурукова Валерия">
+                            </div>
+                            <div class="profile-info">
+                                <div class="profile-item">
+                                    <div class="profile-label">Телефон</div>
+                                    <div class="profile-value">8 916 808 16 78</div>
+                                </div>
+                                
+                                <div class="profile-item">
+                                    <div class="profile-label">E-mail</div>
+                                    <div class="profile-value">lera.burukova2005@mail.ru</div>
+                                </div>
+                                
+                                <div class="profile-item">
+                                    <div class="profile-label">СНИЛС</div>
+                                    <div class="profile-value">199-479-502 54</div>
+                                </div>
+                                
+                                <div class="profile-item">
+                                    <div class="profile-label">Образование</div>
+                                    <div class="education-item">
+                                        РГУ нефти и газа (НИУ) имени И.М. Губкина, Разработки нефтяных и газовых месторождений, Специалист, РС-23-11, 2023 - 2029 гг.
+                                    </div>
+                                    <div class="education-item">
+                                        РГУ нефти и газа (НИУ) имени И.М. Губкина, Разработки нефтяных и газовых месторождений, Специалист, РС-24-10, 2024 - 2030 гг.
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-item">
+                                    <div class="profile-label">О себе</div>
+                                    <div class="history-item">
+                                        <strong>Профорг группы</strong><br>
+                                        (01.09.2023 - 01.03.2029)<br>
+                                        k=1.1
+                                    </div>
+                                </div>
+                                
+                                <div class="profile-item">
+                                    <div class="profile-label">История должности</div>
+                                    <div class="history-item">
+                                        <strong>Заместитель председателя профбюро факультета по общим вопросам</strong><br>
+                                        (17.05.2024 - 30.05.2025)<br>
+                                        k=1.5
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка События -->
+                    <div id="sobytiya" class="tab-content">
+                        <div class="section-header">События</div>
+                        <div class="events-buttons">
+                            <button class="event-btn active">Все</button>
+                            <button class="event-btn">Предстоящие</button>
+                            <button class="event-btn">Пойду</button>
+                            <button class="event-btn">Уже был</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Достижения -->
+                    <div id="dostizheniya" class="tab-content">
+                        <div class="section-header">Достижения</div>
+                        <div class="achievements-row">
+                            <div class="achievement-item">
+                                <span class="metric-label">Средний балл</span>
+                                <div class="metric-value">4.12</div>
+                            </div>
+                            <div class="achievement-item">
+                                <span class="metric-label">Средний рейтинг</span>
+                                <div class="metric-value">70</div>
+                            </div>
+                            <div class="achievement-item">
+                                <span class="metric-label">Долги</span>
+                                <div class="metric-value">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Учебный план -->
+                    <div id="uchebnyy-plan" class="tab-content">
+                        <div class="section-header">Учебный план</div>
+                        
+                        <!-- Семестр 3 -->
+                        <div class="content-section">
+                            <div class="semester-info">Семестр 3 | Средний балл: 4.00</div>
+                            <table class="subjects-table">
+                                <thead>
+                                    <tr>
+                                        <th>Предмет</th>
+                                        <th>Вид отчетности</th>
+                                        <th>Рейтинг</th>
+                                        <th>Оценка</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Технология конструкционных материалов</td>
+                                        <td>Зачет</td>
+                                        <td>61</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы противодействия коррупции</td>
+                                        <td>Зачет</td>
+                                        <td>73</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Профессионально-личностное саморазвитие</td>
+                                        <td>Зачет</td>
+                                        <td>69</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Функции многих переменных. Дифференциальные уравнения</td>
+                                        <td>Экзамен</td>
+                                        <td>78</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Электромагнетизм и волны</td>
+                                        <td>Экзамен</td>
+                                        <td>73</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физическая и коллоидная химия</td>
+                                        <td>Диф. зачет</td>
+                                        <td>81</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Промысловая геология</td>
+                                        <td>Диф. зачет</td>
+                                        <td>74</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физика пластовых систем</td>
+                                        <td>Экзамен</td>
+                                        <td>80</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Теоретическая механика 2</td>
+                                        <td>Экзамен</td>
+                                        <td>78</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Командообразование и принципы успешной командной деятельности</td>
+                                        <td>Зачет</td>
+                                        <td>75</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физическая культура 3</td>
+                                        <td>Зачет</td>
+                                        <td>66</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Семестр 2 -->
+                        <div class="content-section">
+                            <div class="semester-info">Семестр 2 | Средний балл: 4.00</div>
+                            <table class="subjects-table">
+                                <thead>
+                                    <tr>
+                                        <th>Предмет</th>
+                                        <th>Вид отчетности</th>
+                                        <th>Рейтинг</th>
+                                        <th>Оценка</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Введение в информационные системы</td>
+                                        <td>Зачет</td>
+                                        <td>75</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Геология нефти и газа</td>
+                                        <td>Зачет</td>
+                                        <td>58</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Деловой этикет и культура коммуникации</td>
+                                        <td>Зачет</td>
+                                        <td>74</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Интегралы и ряды</td>
+                                        <td>Экзамен</td>
+                                        <td>50</td>
+                                        <td class="grade-good">3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Материаловедение и технология конструкционных материалов</td>
+                                        <td>Зачет</td>
+                                        <td>56</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы молекулярной физики</td>
+                                        <td>Экзамен</td>
+                                        <td>70</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы нефтегазовых технологий</td>
+                                        <td>Экзамен</td>
+                                        <td>85</td>
+                                        <td class="grade-excellent">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Первая учебная практика</td>
+                                        <td>Диф. зачет</td>
+                                        <td>89</td>
+                                        <td class="grade-excellent">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Теоретическая механика</td>
+                                        <td>Зачет</td>
+                                        <td>63</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физическая культура 2</td>
+                                        <td>Зачет</td>
+                                        <td>52</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Химия 2</td>
+                                        <td>Экзамен</td>
+                                        <td>62</td>
+                                        <td class="grade-good">3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Семестр 1 -->
+                        <div class="content-section">
+                            <div class="semester-info">Семестр 1 | Средний балл: 3.80</div>
+                            <table class="subjects-table">
+                                <thead>
+                                    <tr>
+                                        <th>Предмет</th>
+                                        <th>Вид отчетности</th>
+                                        <th>Рейтинг</th>
+                                        <th>Оценка</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Базовые цифровые технологии</td>
+                                        <td>Экзамен</td>
+                                        <td>70</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Геология</td>
+                                        <td>Экзамен</td>
+                                        <td>87</td>
+                                        <td class="grade-excellent">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Дифференциальное исчисление и аналитическая геометрия</td>
+                                        <td>Экзамен</td>
+                                        <td>63</td>
+                                        <td class="grade-good">3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Инклюзивная компетентность современного специалиста</td>
+                                        <td>Зачет</td>
+                                        <td>80</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>История нефтегазовой отрасли</td>
+                                        <td>Зачет</td>
+                                        <td>70</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Начертательная геометрия</td>
+                                        <td>Зачет</td>
+                                        <td>54</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы межкультурного и межконфессионального общения</td>
+                                        <td>Зачет</td>
+                                        <td>70</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Основы механики</td>
+                                        <td>Экзамен</td>
+                                        <td>74</td>
+                                        <td class="grade-good">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Физическая культура</td>
+                                        <td>Зачет</td>
+                                        <td>68</td>
+                                        <td class="grade-pass">Зачет</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Химия</td>
+                                        <td>Диф. зачет</td>
+                                        <td>50</td>
+                                        <td class="grade-good">3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Приказы -->
+                    <div id="prikazy" class="tab-content">
+                        <div class="section-header">Приказы</div>
+                        <div class="text-content">
+                            <div class="order-item">
+                                <div class="order-number">Приказ №5179-У</div>
+                                <div class="order-date">от 12.11.2025</div>
+                                <div class="order-description">Перевод на следующий курс;</div>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-number">Приказ №3106-У</div>
+                                <div class="order-date">от 08.08.2025</div>
+                                <div class="order-description">Восстановление после академического отпуска; Восстановление в группу РС-24-10 с 01.09.2025 г.</div>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-number">Приказ №5474-У</div>
+                                <div class="order-date">от 09.12.2024</div>
+                                <div class="order-description">Академический отпуск по семейным и иным обстоятельствам; С 05.12.2024 г. по 31.08.2025 г.</div>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-number">Приказ №2814-У</div>
+                                <div class="order-date">от 22.07.2024</div>
+                                <div class="order-description">Перевод на следующий курс (условно имеющих академическую задолженность);</div>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-number">Приказ №2334-У</div>
+                                <div class="order-date">от 21.08.2023</div>
+                                <div class="order-description">Перевод / распределение в группу; Числить в группе РС-23-11 с 18.08.2023 г.</div>
+                            </div>
+                            
+                            <div class="order-item">
+                                <div class="order-number">Приказ №2198-У</div>
+                                <div class="order-date">от 07.08.2023</div>
+                                <div class="order-description">Поступление в университет;</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Стипендия -->
+                    <div id="stipendiya" class="tab-content">
+                        <div class="section-header">Стипендия</div>
+                        <div class="scholarship-info">
+                            <div class="scholarship-amount">3 000 руб.</div>
+                            <table class="scholarship-table">
+                                <thead>
+                                    <tr>
+                                        <th>Месяц</th>
+                                        <th>Дата зачисления</th>
+                                        <th>Сумма</th>
+                                        <th>Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Сентябрь 2023</td>
+                                        <td>05.09.2023</td>
+                                        <td>3 000 руб.</td>
+                                        <td style="color: #28a745;">Зачислена</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Октябрь 2023</td>
+                                        <td>07.10.2023</td>
+                                        <td>3 000 руб.</td>
+                                        <td style="color: #28a745;">Зачислена</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ноябрь 2023</td>
+                                        <td>06.11.2023</td>
+                                        <td>3 000 руб.</td>
+                                        <td style="color: #28a745;">Зачислена</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Декабрь 2023</td>
+                                        <td>05.12.2023</td>
+                                        <td>3 000 руб.</td>
+                                        <td style="color: #28a745;">Зачислена</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Литература -->
+                    <div id="literatura" class="tab-content">
+                        <div class="section-header">Литература</div>
+                        <div class="empty-state">
+                            Список литературы пуст
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Карьера -->
+                    <div id="karera" class="tab-content">
+                        <div class="section-header">Карьера</div>
+                        <div class="centered-text">
+                            Раздел находится в разработке
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Дистанционное обучение -->
+                    <div id="distantsionnoe-obuchenie" class="tab-content">
+                        <div class="section-header">Дистанционное обучение</div>
+                        <div class="text-content">
+                            <h3>Единый образовательный портал</h3>
+                            <p>Образовательный процесс с применением электронного обучения и дистанционных образовательных технологий проводится с использованием образовательного портала <a href="https://edu.gubkin.ru/" target="_blank">https://edu.gubkin.ru/</a>. Доступ к образовательному порталу не ограничен и возможен из любой точки, где есть доступ в сеть Интернет. Студентам для входа достаточно ввести ID электронного удостоверения и пароль от личного кабинета студента (все, как при входе в личный кабинет, нет необходимости в дополнительной регистрации).</p>
+                            
+                            <h3>Как пользоваться</h3>
+                            <p>При входе на портал Вы увидите доступные курсы в соответствии с учебным планом. Инструкции для студентов по использованию платформы, в т.ч. удобные видео-инструкции, Вы можете посмотреть здесь <a href="https://edu.gubkin.ru/course/view.php?id=19977#section-2" target="_blank">https://edu.gubkin.ru/course/view.php?id=19977#section-2</a> после авторизации на портале.</p>
+                            
+                            <h3>Куда обращаться в случае вопроса или предложения?</h3>
+                            <p>Любые вопросы и предложения, связанные с использованием платформы дистанционного обучения <a href="https://edu.gubkin.ru/" target="_blank">https://edu.gubkin.ru/</a>, Вы можете направлять на почту отдела АСУ <a href="mailto:oasu@gubkin.ru">oasu@gubkin.ru</a></p>
+                            
+                            <p><strong>Хорошей учёбы!</strong> Преподаватели очень стараются и продолжают готовить для Вас качественные материалы для обучения. Поддержите их своей вовлеченностью и продуктивностью в учебном процессе!</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Реквизиты счета -->
+                    <div id="rekvizity-scheta" class="tab-content">
+                        <div class="section-header">Реквизиты счета</div>
+                        <div class="text-content">
+                            <p><strong>БИК (банковский идентификационный код):</strong><br>044525974</p>
+                            <p><strong>Название банка:</strong><br>АО "ТБанк"</p>
+                            <p><strong>Корр. счет:</strong><br>30101810145250000974</p>
+                            <p><strong>Получатель:</strong><br>Бурукова Валерия Валерьевна</p>
+                            <p><strong>Номер счета в банке:</strong><br>40817810500086814355</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Заявления -->
+                    <div id="zayavleniya" class="tab-content">
+                        <div class="section-header">Заявления</div>
+                        <div class="empty-state">
+                            Заявления отсутствуют
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Уведомления и объяснительные -->
+                    <div id="uvedomleniya-i-obyasnitelnye" class="tab-content">
+                        <div class="section-header">Уведомления и объяснительные</div>
+                        <div class="text-content">
+                            <p>Данная вкладка предназначена для уведомления обучающихся о необходимости предоставления объяснительных записок в связи с выявленными нарушениями ими локальных нормативных актов Губкинского университета, а также для предоставления объяснительных в электронном виде обучающимися. Если Вы не видите уведомлений в данной вкладке, в предоставлении объяснительной нет необходимости.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Новости -->
+                    <div id="novosti" class="tab-content">
+                        <div class="section-header">Новости</div>
+                        <div class="text-content">
+                            <h3>12 января 2026</h3>
+                            <h4>Порядок оплаты обучения в 2025/2026 учебном году (за второй период)</h4>
+                            <p>Приказом ректора №190 от 12.05.2025г. студентам в 2025/2026 учебному году, обучающимся за счет средств физического лица по очной и очно-заочной (вечерней) формам обучения, разрешена оплата по семестрам без предоставления документов.</p>
+                            
+                            <p>В случае значительного ухудшения материального положения Вы можете подать в Отдел платных образовательных услуг ПФУ (каб. 359) заявления на поквартальную рассрочку платежа в период с 12 января по 20 января 2026 года.</p>
+                            
+                            <p>Заявление подается на имя ректора Мартынова В.Г. заказчиком обучения (строго по договору) с приложением документов, подтверждающих тяжелое материальное положение (справка по форме 2-НДФЛ за 2024 и 2025 года, копия трудовой книжки, справка о признании безработным и другие).</p>
+                            
+                            <p>Все поступившие в установленный срок заявления будут рассмотрены комиссией в период с 21 января по 26 января. После чего с Вами свяжутся по указанным в заявлении контактам для подписания дополнительного соглашения с новым графиком платежей. Оплата за второй период строго до 01 февраля 2026г.</p>
+                            
+                            <p><strong>Обращаем Ваше внимание, что заявления на отсрочку платежа в 2026 году не принимаются!</strong></p>
+                            
+                            <h3>Контактные данные:</h3>
+                            <p><strong>Отдел платных образовательных услуг ПФУ</strong></p>
+                            <p>Часы приема пн-чт с 10:00 до 17:00; пт с 10:00 до 16:00. Обед с 13:00 до 13:30</p>
+                            <p>Адрес: Город Москва, проспект Ленинский, дом 65, корпус 1, каб. 359</p>
+                            <p>Телефон: +7 (499) 507-81-14, +7 (499) 507-81-15</p>
+                            <p>e-mail: <a href="mailto:otdpy@gubkin.ru">otdpy@gubkin.ru</a></p>
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Уведомления -->
+                    <div id="uvedomleniya" class="tab-content">
+                        <div class="section-header">Уведомления</div>
+                        <div class="empty-state">
+                            Нет новых уведомлений
+                        </div>
+                    </div>
+                    
+                    <!-- Вкладка Заявки -->
+                    <div id="zayavki" class="tab-content">
+                        <div class="section-header">Заявки</div>
+                        <div class="empty-state">
+                            Нет заявок
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <script>
+        // Функция для переключения вкладок
+        function switchTab(tabId) {
+            // Скрываем все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Показываем выбранную вкладку
+            const activeTab = document.getElementById(tabId);
+            if (activeTab) {
+                activeTab.classList.add('active');
+            }
+            
+            // Убираем активный класс у всех пунктов меню
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Добавляем активный класс к выбранному пункту меню, если он существует
+            const menuItem = document.querySelector(`.menu-item[data-tab="${tabId}"]`);
+            if (menuItem) {
+                menuItem.classList.add('active');
+            }
+        }
+        
+        // Обработка кликов по пунктам меню
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                switchTab(tabId);
+            });
+        });
+        
+        // Обработка кликов по кнопкам событий
+        document.querySelectorAll('.event-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Убираем активный класс у всех кнопок событий
+                document.querySelectorAll('.event-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                // Добавляем активный класс к нажатой кнопке
+                this.classList.add('active');
+            });
+        });
+        
+        function showCard() {
+            alert("Открытие карточки студента");
+            switchTab('uchebnaya-kartochka');
+        }
+        
+        function downloadStats() {
+            alert("Скачивание статистики успеваемости");
+        }
+        
+        // Инициализация: активируем первую вкладку
+        switchTab('uchebnaya-kartochka');
+    </script>
+</body>
+</html>
